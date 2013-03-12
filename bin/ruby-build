@@ -242,7 +242,11 @@ fetch_tarball() {
   }
 
   { if tar xzvf "$package_filename"; then
-      [ -z "$KEEP_BUILD_PATH" ] && rm -f "$package_filename"
+      if [ -z "$KEEP_BUILD_PATH" ]; then
+        true
+      else
+        rm -f "$package_filename"
+      fi
     fi
   } >&4 2>&1
 }
