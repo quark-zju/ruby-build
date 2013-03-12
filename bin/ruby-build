@@ -241,8 +241,9 @@ fetch_tarball() {
     download_tarball "$package_url" "$package_filename" "$checksum"
   }
 
-  { tar xzvf "$package_filename"
-    rm -f "$package_filename"
+  { if tar xzvf "$package_filename"; then
+      [ -z "$KEEP_BUILD_PATH" ] && rm -f "$package_filename"
+    fi
   } >&4 2>&1
 }
 
